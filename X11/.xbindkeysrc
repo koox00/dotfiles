@@ -1,0 +1,21 @@
+# volume controls
+"amixer set Master 5%+"
+    XF86AudioRaiseVolume
+"amixer set Master 5%-"
+    XF86AudioLowerVolume
+"amixer set Master toggle"
+    XF86AudioMute
+
+# mpc controls
+"mpc toggle"
+    XF86AudioPlay
+"mpc prev"
+    XF86AudioPrev
+"mpc next"
+    XF86AudioNext
+
+# brightness control
+"xbacklight -inc 5"
+    XF86MonBrightnessUp
+"xbacklight -dec 5"
+    XF86MonBrightnessDown
