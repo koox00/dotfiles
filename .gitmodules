@@ -38,8 +38,8 @@
 	path = vim/.vim/bundle/vim-pathogen
 	url = git@github.com:tpope/vim-pathogen.git
 [submodule "colors/colorschemes/solarized"]
-	path = colorschemes/solarized
+	path = colors/colorschemes/solarized
 	url = git@github.com:altercation/solarized.git
 [submodule "colors/colorschemes/behelit"]
-	path = colorschemes/behelit
+	path = colors/colorschemes/behelit
 	url = git://git.2f30.org/behelit.git
