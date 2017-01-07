@@ -54,6 +54,7 @@ colorscheme solarized
 let g:airline_theme='solarized'
 set background=dark
 
+let NERDTreeShowHidden=1
 let g:NERDTreeDirArrowExpandable = '>'
 let g:NERDTreeDirArrowCollapsible = '|'
 let g:NERDTreeIndicatorMapCustom = {
