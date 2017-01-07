@@ -11,8 +11,9 @@ runtime macros/matchit.vim
 set tabstop=4
 set shiftwidth=4
 set expandtab
-set t_Co=256
 
+set t_Co=256
+set history=1000
 set mouse=a
 set path+=**
 
