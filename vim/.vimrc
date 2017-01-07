@@ -4,13 +4,12 @@ execute pathogen#infect()
 
 syntax on
 filetype plugin indent on
-" show existing tab with 4 spaces width
+
 runtime macros/matchit.vim
 
+
 set tabstop=4
-" when indenting with '>', use 4 spaces width
 set shiftwidth=4
-" On pressing tab, insert 4 spaces
 set expandtab
 set t_Co=256
 
@@ -65,11 +64,6 @@ let g:NERDTreeIndicatorMapCustom = {
     \ "Unknown"   : "?"
     \ }
 
-let $JS_CMD='node'
-let jshint2_save = 1
-let jshint2_min_height = 1
-let jshint2_max_height = 6
-
 let g:syntastic_scss_checkers = ['scss_lint']
 
 set statusline+=%#warningmsg#
@@ -95,6 +89,7 @@ nnoremap <silent> <c-j> :call TmuxMove('j')<cr>
 nnoremap <silent> <c-k> :call TmuxMove('k')<cr>
 nnoremap <silent> <c-l> :call TmuxMove('l')<cr>
 
+" json format with :J
 command! J :%!python -mjson.tool
 
 " The Silver Searcher
