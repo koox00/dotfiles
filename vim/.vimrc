@@ -68,7 +68,6 @@ let jshint2_save = 1
 let jshint2_min_height = 1
 let jshint2_max_height = 6
 
-let g:used_javascript_libs = 'underscore,angularjs,jasmine,angularui,angularuirouter'
 let g:syntastic_scss_checkers = ['scss_lint']
 
 set statusline+=%#warningmsg#
