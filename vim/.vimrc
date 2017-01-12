@@ -70,6 +70,7 @@ let g:NERDTreeIndicatorMapCustom = {
     \ }
 
 let g:syntastic_scss_checkers = ['scss_lint']
+let g:syntastic_loc_list_height=5
 
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
