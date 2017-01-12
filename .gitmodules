@@ -44,5 +44,5 @@
 	path = colors/colorschemes/behelit
 	url = git://git.2f30.org/behelit.git
 [submodule "vim-surround"]
-	path = vim-surround
+	path = vim/.vim/bundle/vim-surround
 	url = git://github.com/tpope/vim-surround.git
