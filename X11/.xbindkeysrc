@@ -20,5 +20,5 @@
 "xbacklight -dec 5"
     XF86MonBrightnessDown
 
-"xset s 10"
+"slock"
     XF86ScreenSaver
