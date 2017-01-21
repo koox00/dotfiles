@@ -44,6 +44,9 @@ xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Axes" 6 7 4 5
 
 xrandr --dpi 125.37
 
+xset s 0
+sh $HOME/.xsidle.sh slock &
+
 xsetroot -cursor_name left_ptr &
 synclient TouchpadOff=1
 sh ~/.fehbg
