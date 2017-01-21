@@ -58,3 +58,6 @@
 [submodule "vim/.vim/bundle/vim-javascript"]
 	path = vim/.vim/bundle/vim-javascript
 	url = https://github.com/pangloss/vim-javascript.git
+[submodule "mutt/.mutt/mutt-colors-solarized"]
+	path = mutt/.mutt/mutt-colors-solarized
+	url = https://github.com/altercation/mutt-colors-solarized.git

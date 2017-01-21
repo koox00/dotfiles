@@ -50,6 +50,12 @@ nnoremap <C-J> <C-W>j
 nnoremap <C-K> <C-W>k
 nnoremap <C-L> <C-W>l
 
+" set code folding
+set foldmethod=indent
+set foldnestmax=1
+set nofoldenable
+set foldlevel=2
+
 colorscheme solarized
 let g:airline_theme='solarized'
 set background=dark
@@ -58,17 +64,18 @@ let NERDTreeShowHidden=1
 let g:NERDTreeDirArrowExpandable = '>'
 let g:NERDTreeDirArrowCollapsible = '|'
 let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "*",
-    \ "Staged"    : "+",
-    \ "Untracked" : "!",
-    \ "Renamed"   : "<>",
-    \ "Unmerged"  : "═",
-    \ "Deleted"   : "-",
-    \ "Dirty"     : "x",
-    \ "Clean"     : ":)",
-    \ "Unknown"   : "?"
-    \ }
+            \ "Modified"  : "*",
+            \ "Staged"    : "+",
+            \ "Untracked" : "!",
+            \ "Renamed"   : "<>",
+            \ "Unmerged"  : "═",
+            \ "Deleted"   : "-",
+            \ "Dirty"     : "x",
+            \ "Clean"     : ":)",
+            \ "Unknown"   : "?"
+            \ }
 
+" Syntastic
 let g:syntastic_scss_checkers = ['scss_lint']
 let g:syntastic_loc_list_height=5
 
@@ -81,13 +88,14 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
+" tmux and vim
 function! TmuxMove(direction)
-        let wnr = winnr()
-        silent! execute 'wincmd ' . a:direction
-        " If the winnr is still the same after we moved, it is the last pane
-        if wnr == winnr()
-                call system('tmux select-pane -' . tr(a:direction, 'phjkl', 'lLDUR'))
-        end
+    let wnr = winnr()
+    silent! execute 'wincmd ' . a:direction
+    " If the winnr is still the same after we moved, it is the last pane
+    if wnr == winnr()
+        call system('tmux select-pane -' . tr(a:direction, 'phjkl', 'lLDUR'))
+    end
 endfunction
 
 nnoremap <silent> <c-h> :call TmuxMove('h')<cr>
@@ -100,13 +108,18 @@ command! J :%!python -mjson.tool
 
 " The Silver Searcher
 if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
+    " Use ag over grep
+    set grepprg=ag\ --nogroup\ --nocolor
+    " ag over Ack
+    let g:ackprg = 'ag --vimgrep'
 endif
+
+cnoreabbrev Ack Ack!
+nnoremap <Leader>a :Ack!<Space>
+
+" MiniBufExplorer
+let g:miniBufExplStatusLineText=''
+
+" for mutt
+au BufRead /tmp/mutt-* set tw=72
 
