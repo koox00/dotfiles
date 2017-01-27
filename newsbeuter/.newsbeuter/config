@@ -1,0 +1,31 @@
+show-keymap-hint false
+swap-title-and-hints false
+browser "/usr/bin/w3m"
+pager internal
+html-renderer "/usr/bin/w3m"
+
+auto-reload yes
+
+bind-key j next
+bind-key k prev
+bind-key J next-feed
+bind-key K prev-feed
+bind-key j down article
+bind-key k up article
+bind-key J next article
+bind-key K prev article
+
+color background          default   default  # background: the application background
+color listnormal          default   default  # listnormal: a normal list item
+color listnormal_unread   green     default  # listnormal_unread: an unread list item
+color listfocus           black     yellow   # listfocus: the currently selected list item
+color listfocus_unread    black     red      # listfocus_unread: the currently selected and unread list item
+color info                default   black    # info: the info bars on top and bottom
+color article             default   default  # article: the article text
+
+# highlights
+highlight article "^(Title):.*$" black default
+highlight article "https?://[^ ]+" blue default
+highlight article "\\[image\\ [0-9]+\\]" green default
+
+feed-sort-order name
