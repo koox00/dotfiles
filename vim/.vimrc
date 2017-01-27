@@ -44,7 +44,8 @@ set list
 :imap jj <Esc>
 :nnoremap <F5> :buffers<CR>:buffer<Space>
 
-map <C-n> :NERDTreeToggle<CR>
+map <C-n> :NERDTreeFind<CR>
+
 nnoremap <C-H> <C-W>h
 nnoremap <C-J> <C-W>j
 nnoremap <C-K> <C-W>k
