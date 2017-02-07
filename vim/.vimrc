@@ -44,7 +44,6 @@ set list
 :imap jj <Esc>
 :nnoremap <F5> :buffers<CR>:buffer<Space>
 
-map <C-n> :NERDTreeFind<CR>
 
 nnoremap <C-H> <C-W>h
 nnoremap <C-J> <C-W>j
@@ -61,33 +60,20 @@ colorscheme solarized
 let g:airline_theme='solarized'
 set background=dark
 
-let NERDTreeShowHidden=1
-let g:NERDTreeDirArrowExpandable = '>'
-let g:NERDTreeDirArrowCollapsible = '|'
-let g:NERDTreeIndicatorMapCustom = {
-            \ "Modified"  : "*",
-            \ "Staged"    : "+",
-            \ "Untracked" : "!",
-            \ "Renamed"   : "<>",
-            \ "Unmerged"  : "═",
-            \ "Deleted"   : "-",
-            \ "Dirty"     : "x",
-            \ "Clean"     : ":)",
-            \ "Unknown"   : "?"
-            \ }
-
 " Syntastic
 let g:syntastic_scss_checkers = ['scss_lint']
 let g:syntastic_loc_list_height=5
+
+let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
 
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_loc_list_height=3
 
 " tmux and vim
 function! TmuxMove(direction)
