@@ -58,3 +58,6 @@
 [submodule "mutt/.mutt/mutt-colors-solarized"]
 	path = mutt/.mutt/mutt-colors-solarized
 	url = https://github.com/altercation/mutt-colors-solarized.git
+[submodule "vim/.vim/bundle/vim-css-color"]
+	path = vim/.vim/bundle/vim-css-color
+	url = https://github.com/ap/vim-css-color.git
