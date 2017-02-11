@@ -47,8 +47,11 @@ xrandr --dpi 125.37
 xset s 0
 sh $HOME/.xsidle.sh slock &
 
+xbacklight -set 30
+
 xsetroot -cursor_name left_ptr &
 synclient TouchpadOff=1
+
 sh ~/.fehbg
 spoon &
 
