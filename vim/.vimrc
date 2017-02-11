@@ -4,47 +4,49 @@ execute pathogen#infect()
 
 syntax on
 filetype plugin indent on
-runtime macros/matchit.vim
+runtime macros/matchit.vim " extended % matching for HTML
 
-set tabstop=4
-set shiftwidth=4
-set expandtab
+set tabstop=4 shiftwidth=4 expandtab " convert tabs to spaces
 
+" display 256 colors
 set t_Co=256
-set history=1000
-set mouse=a
-set path+=**
+set t_AB=[48;5;%dm
+set t_AF=[38;5;%dm
 
-set showcmd     "show incomplete cmds down the bottom
-set nowrap
-set number
-set laststatus=2
-set fixeol
-set pastetoggle=<F10>
-set hidden
+set history=1000 " set command history
+set path=$PWD/** " set path to working dir and all subdirs recursively
+
+set laststatus=2 " always show status bar
+set showcmd      " show incomplete cmds down the bottom
+
+set wrap
+set number " line numbers
+set hidden " hide buffers instead of closing
+" set chars for tabs, trailing spaces
+set list
 set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
 
-set incsearch   "find the next match as we type the search
-set hlsearch    "hilight searches by default
+set incsearch   " find the next match as we type the search
+set hlsearch    " highlight searches by default
 
-set linebreak   "wrap lines at convenient points
-
-set directory=$HOME/.vim/swapfiles//
-set backupdir=$HOME/.vim/backups//
+set directory=$HOME/.vim/swapfiles// " save directory for swapfiles
+set backupdir=$HOME/.vim/backups//   " save directory for backup files
 
 set undofile                   " Save undo's after file closes
 set undodir=$HOME/.vim/undos// " where to save undo histories
 set undolevels=1000            " How many undos
 set undoreload=10000           " number of lines to save for undo
 
-set wmh=0
+set wmh=0 " min window height
 
-set list
-
+" toggle paste mode
+set pastetoggle=<F10>
+" get out of insert mode
 :imap jj <Esc>
+" list buffers
 :nnoremap <F5> :buffers<CR>:buffer<Space>
 
-
+" navigate windows with Ctrl+h j k l
 nnoremap <C-H> <C-W>h
 nnoremap <C-J> <C-W>j
 nnoremap <C-K> <C-W>k
@@ -62,20 +64,19 @@ set background=dark
 
 " Syntastic
 let g:syntastic_scss_checkers = ['scss_lint']
-let g:syntastic_loc_list_height=5
-
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+
+let g:syntastic_auto_loc_list = 1 " open when error, close when no error
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_loc_list_height=3
 
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_loc_list_height=3
-
-" tmux and vim
+" Ctrl+ hjkl between tmux and vim windows
+" taken from a gist comment somewhere
 function! TmuxMove(direction)
     let wnr = winnr()
     silent! execute 'wincmd ' . a:direction
@@ -101,12 +102,13 @@ if executable('ag')
     let g:ackprg = 'ag --vimgrep'
 endif
 
+" dont auto jump to first result
 cnoreabbrev Ack Ack!
 nnoremap <Leader>a :Ack!<Space>
 
 " MiniBufExplorer
-let g:miniBufExplStatusLineText=''
+let g:miniBufExplStatusLineText='(╯’□’)╯︵'
 
-" for mutt
+" line width for emails
 au BufRead /tmp/mutt-* set tw=72
 
