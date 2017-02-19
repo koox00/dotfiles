@@ -19,9 +19,6 @@
 [submodule "vim/.vim/bundle/nerdtree"]
 	path = vim/.vim/bundle/nerdtree
 	url = git@github.com:scrooloose/nerdtree.git
-[submodule "vim/.vim/bundle/vim-plugin-minibufexpl"]
-	path = vim/.vim/bundle/vim-plugin-minibufexpl
-	url = git@github.com:weynhamz/vim-plugin-minibufexpl.git
 [submodule "vim/.vim/bundle/editorconfig-vim"]
 	path = vim/.vim/bundle/editorconfig-vim
 	url = git@github.com:editorconfig/editorconfig-vim.git
