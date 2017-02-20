@@ -58,3 +58,9 @@
 [submodule "vim/.vim/bundle/vim-css-color"]
 	path = vim/.vim/bundle/vim-css-color
 	url = https://github.com/ap/vim-css-color.git
+[submodule "vim/.vim/bundle/vim-bufferline"]
+	path = vim/.vim/bundle/vim-bufferline
+	url = https://github.com/bling/vim-bufferline
+[submodule "vim/.vim/bundle/vim-unimpaired"]
+	path = vim/.vim/bundle/vim-unimpaired
+	url = https://github.com/tpope/vim-unimpaired.git
