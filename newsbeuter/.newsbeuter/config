@@ -5,6 +5,9 @@ pager internal
 html-renderer "/usr/bin/w3m"
 
 auto-reload yes
+notify-beep yes
+feed-sort-order name
+confirm-exit yes
 
 bind-key j next
 bind-key k prev
@@ -28,4 +31,3 @@ highlight article "^(Title):.*$" black default
 highlight article "https?://[^ ]+" blue default
 highlight article "\\[image\\ [0-9]+\\]" green default
 
-feed-sort-order name
