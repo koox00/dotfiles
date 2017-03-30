@@ -96,17 +96,15 @@ let g:airline_symbols.whitespace = 'Ξ'
 let g:bufferline_echo = 0
 
 " Syntastic
+let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_scss_checkers = ['scss_lint']
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
 
 let g:syntastic_auto_loc_list = 1 " open when error, close when no error
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_loc_list_height=3
-
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
 
 " Ctrl+ hjkl between tmux and vim windows
 " taken from a gist comment somewhere
