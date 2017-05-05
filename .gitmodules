@@ -73,3 +73,6 @@
 [submodule "colors/colorschemes/nord-xresources"]
 	path = colors/colorschemes/nord-xresources
 	url = https://github.com/arcticicestudio/nord-xresources.git
+[submodule "vim/.vim/bundle/vim-flow"]
+	path = vim/.vim/bundle/vim-flow
+	url = git://github.com/flowtype/vim-flow.git
