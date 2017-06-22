@@ -76,3 +76,9 @@
 [submodule "vim/.vim/bundle/vim-flow"]
 	path = vim/.vim/bundle/vim-flow
 	url = git://github.com/flowtype/vim-flow.git
+[submodule "vim/.vim/bundle/elm-vim"]
+	path = vim/.vim/bundle/elm-vim
+	url = https://github.com/ElmCast/elm-vim.git
+[submodule "vim/.vim/bundle/dracula-theme"]
+	path = vim/.vim/bundle/dracula-theme
+	url = git@github.com:dracula/vim.git

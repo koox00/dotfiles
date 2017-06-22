@@ -8,10 +8,17 @@ runtime macros/matchit.vim " extended % matching for HTML
 
 set tabstop=4 shiftwidth=4 expandtab " convert tabs to spaces
 
+autocmd FileType python
+            \ setlocal sw=4 |
+            \ setlocal ts=4 |
+            \ setlocal sts=4
+
 " display 256 colors
 set t_Co=256
 set t_AB=[48;5;%dm
 set t_AF=[38;5;%dm
+let g:netrw_banner=0 
+
 
 set history=1000 " set command history
 set path=$PWD/** " set path to working dir and all subdirs recursively
@@ -22,8 +29,7 @@ set showcmd      " show incomplete cmds down the bottom
 set wrap
 set number " line numbers
 set hidden " hide buffers instead of closing
-" set chars for tabs, trailing spaces
-set list
+set list   " set chars for tabs, trailing spaces
 set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
 
 set incsearch   " find the next match as we type the search
@@ -58,10 +64,10 @@ set foldnestmax=1
 set nofoldenable
 set foldlevel=2
 
-colorscheme solarized
+colorscheme dracula
 set background=dark
 
-let g:airline_theme='solarized'
+let g:airline_theme='dracula'
 let g:airline#extensions#branch#format = 2
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
