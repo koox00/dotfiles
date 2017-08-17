@@ -2,6 +2,9 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 
 execute pathogen#infect()
 
+set synmaxcol=200
+autocmd VimResized * wincmd =
+
 syntax on
 filetype plugin indent on
 runtime macros/matchit.vim " extended % matching for HTML
@@ -143,8 +146,19 @@ endif
 cnoreabbrev Ack Ack!
 nnoremap <Leader>a :Ack!<Space>
 
+if &term =~ '256color'
+    " disable Background Color Erase (BCE) so that color schemes
+    " render properly when inside 256-color tmux and GNU screen.
+    " see also http://sunaku.github.io/vim-256color-bce.html
+    set t_ut=
+endif
+
+
 " MiniBufExplorer
 let g:miniBufExplStatusLineText='(╯’□’)╯︵'
+
+highlight Pmenu ctermfg=green ctermbg=black
+highlight PmenuSel ctermfg=black ctermbg=green
 
 " line width for emails
 au BufRead /tmp/mutt-* set tw=72
