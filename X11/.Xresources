@@ -1,5 +1,5 @@
-! #include "colorschemes/nord-xresources/src/nord"
-#include "~/colorschemes/solarized/xresources/solarized"
+#include "colorschemes/nord-xresources/src/nord"
+! #include "~/colorschemes/solarized/xresources/solarized"
 
 URxvt.font: xft:terminess powerline:size=9
 ! URxvt.letterSpace: -1
@@ -12,7 +12,7 @@ URxvt*scrollBar_right: true
 URxvt*scrollColor: #000000
 URxvt*urgentOnBell: yes
 
-Xft.dpi: 125.37
+/* Xft.dpi: 125.37 */
 Xft.autohint: 0
 Xft.lcdfilter:  lcddefault
 Xft.hintstyle:  hintfull

@@ -5,11 +5,13 @@ usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
 sysmodmap=/etc/X11/xinit/.Xmodmap
 
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+xbindkeys
 # merge in defaults and keymaps
 
 if [ -f $sysresources ]; then
     xrdb -merge $sysresources
-
 fi
 
 if [ -f $sysmodmap ]; then
@@ -18,7 +20,6 @@ fi
 
 if [ -f "$userresources" ]; then
     xrdb -merge "$userresources"
-
 fi
 
 if [ -f "$usermodmap" ]; then
@@ -44,18 +45,17 @@ xinput set-prop "TPPS/2 IBM TrackPoint" "Evdev Wheel Emulation Axes" 6 7 4 5
 
 xrandr --dpi 125.37
 
-xset s 0
-sh $HOME/.xsidle.sh slock &
+# xset s 0
+# sh $HOME/.xsidle.sh slock &
 
 xbacklight -set 30
 
+setxkbmap -option 'caps:ctrl_modifier'
+xcape -e 'Caps_Lock=Escape;Control_L=Escape;Control_R=Escape'
+
 xsetroot -cursor_name left_ptr &
 synclient TouchpadOff=1
-
 sh ~/.fehbg
 spoon &
 
-xbattmon -t1 -pbottom &
-xbindkeys
 exec dwm
-

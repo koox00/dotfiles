@@ -1,9 +1,15 @@
+set noshowmode
+
 set spell
 set synmaxcol=200
 autocmd VimResized * wincmd =
+set autoread
+set breakindent
+set showbreak=\\\\\
 
 syntax on
 filetype plugin indent on
+set omnifunc=syntaxcomplete#Complete
 runtime macros/matchit.vim " extended % matching for HTML
 
 set expandtab
@@ -32,7 +38,7 @@ set laststatus=2 " always show status bar
 set showcmd      " show incomplete cmds down the bottom
 
 set wrap
-set number " line numbers
+set number relativenumber " line numbers
 set hidden " hide buffers instead of closing
 set list   " set chars for tabs, trailing spaces
 set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
@@ -53,7 +59,7 @@ set wmh=0 " min window height
 " toggle paste mode
 set pastetoggle=<F10>
 " get out of insert mode
-:imap jj <Esc>
+" :imap jj <Esc>
 " list buffers
 :nnoremap <F5> :buffers<CR>:buffer<Space>
 
@@ -68,6 +74,22 @@ set foldmethod=indent
 set foldnestmax=1
 set nofoldenable
 set foldlevel=2
+
+let g:lightline = {
+      \ 'colorscheme': 'Dracula',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'filename': 'LightlineFilename',
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }
+
+function! LightlineFilename()
+    return expand('%') !=# '' ? fnamemodify(expand("%"), ":~:.") : '[No Name]'
+endfunction
 
 colorscheme behelit
 set background=dark
@@ -161,13 +183,22 @@ if &term =~ '256color'
     set t_ut=
 endif
 
-
 " MiniBufExplorer
 let g:miniBufExplStatusLineText='(╯’□’)╯︵'
 
 highlight Pmenu ctermfg=green ctermbg=black
 highlight PmenuSel ctermfg=black ctermbg=green
 hi Visual ctermfg=233 ctermbg=83 gui=NONE
+
+autocmd BufReadPre *.doc set ro
+autocmd BufReadPre *.doc set hlsearch!
+autocmd BufReadPost *.doc %!antiword "%"
+
+:augroup numbertoggle
+:  autocmd!
+:  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+:  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+:augroup END
 
 " line width for emails
 au BufRead /tmp/mutt-* set tw=72
