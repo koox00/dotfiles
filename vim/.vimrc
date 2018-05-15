@@ -1,8 +1,6 @@
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-
-execute pathogen#infect()
 set noshowmode
 
+set spell
 set synmaxcol=200
 autocmd VimResized * wincmd =
 set autoread
@@ -14,7 +12,12 @@ filetype plugin indent on
 set omnifunc=syntaxcomplete#Complete
 runtime macros/matchit.vim " extended % matching for HTML
 
-set tabstop=4 shiftwidth=4 expandtab " convert tabs to spaces
+set expandtab
+set tabstop=2 shiftwidth=2 softtabstop=2
+set autoindent
+
+set cursorcolumn
+set cursorline
 
 autocmd FileType python
             \ setlocal sw=4 |
@@ -25,8 +28,8 @@ autocmd FileType python
 set t_Co=256
 set t_AB=[48;5;%dm
 set t_AF=[38;5;%dm
-let g:netrw_banner=0 
 
+let g:netrw_banner=0
 
 set history=1000 " set command history
 set path=$PWD/** " set path to working dir and all subdirs recursively
@@ -88,41 +91,46 @@ function! LightlineFilename()
     return expand('%') !=# '' ? fnamemodify(expand("%"), ":~:.") : '[No Name]'
 endfunction
 
-colorscheme dracula
+colorscheme behelit
 set background=dark
 
-" let g:airline_theme='dracula'
-" let g:airline#extensions#branch#format = 2
-" let g:airline#extensions#tabline#enabled = 1
-" let g:airline#extensions#tabline#show_buffers = 0
+hi clear SpellBad
+hi SpellBad cterm=underline
 
-" let g:airline_mode_map = {
-"             \ '__' : '-',
-"             \ 'n'  : 'N',
-"             \ 'i'  : 'I',
-"             \ 'R'  : 'R',
-"             \ 'c'  : 'C',
-"             \ 'v'  : 'V',
-"             \ 'V'  : 'V',
-"             \ '' : 'V',
-"             \ 's'  : 'S',
-"             \ 'S'  : 'S',
-"             \ '' : 'S',
-"             \ }
 
-" let g:airline_left_sep = '▶'
-" let g:airline_right_sep = '◀'
+let g:airline_theme='behelit'
+let g:airline#extensions#branch#format = 2
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 0
 
-" let g:airline_symbols = {}
-" let g:airline_symbols.crypt = '🔒'
-" let g:airline_symbols.linenr = '¶'
-" let g:airline_symbols.maxlinenr = '☰'
-" let g:airline_symbols.branch = '⎇'
-" let g:airline_symbols.paste = 'Þ'
-" let g:airline_symbols.spell = 'Ꞩ'
-" let g:airline_symbols.notexists = '∄'
-" let g:airline_symbols.whitespace = 'Ξ'
+let g:airline_mode_map = {
+            \ '__' : '-',
+            \ 'n'  : 'N',
+            \ 'i'  : 'I',
+            \ 'R'  : 'R',
+            \ 'c'  : 'C',
+            \ 'v'  : 'V',
+            \ 'V'  : 'V',
+            \ '' : 'V',
+            \ 's'  : 'S',
+            \ 'S'  : 'S',
+            \ '' : 'S',
+            \ }
 
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '◀'
+
+let g:airline_symbols = {}
+let g:airline_symbols.crypt = '🔒'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.maxlinenr = '☰'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.notexists = '∄'
+let g:airline_symbols.whitespace = 'Ξ'
+
+let g:bufferline_echo = 0
 
 " Syntastic
 let g:syntastic_javascript_checkers = ['eslint']
@@ -134,6 +142,8 @@ let g:syntastic_auto_loc_list = 1 " open when error, close when no error
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_loc_list_height=3
+
+let g:polyglot_disabled = ['javascript', 'jsx', 'graphql']
 
 " Ctrl+ hjkl between tmux and vim windows
 " taken from a gist comment somewhere
@@ -178,6 +188,7 @@ let g:miniBufExplStatusLineText='(╯’□’)╯︵'
 
 highlight Pmenu ctermfg=green ctermbg=black
 highlight PmenuSel ctermfg=black ctermbg=green
+hi Visual ctermfg=233 ctermbg=83 gui=NONE
 
 autocmd BufReadPre *.doc set ro
 autocmd BufReadPre *.doc set hlsearch!
