@@ -1,0 +1,27 @@
+include "~/dotfiles/colors/colorschemes/behelit/newsbeuter/newsbeuter_colors_behelit";
+
+show-keymap-hint false
+swap-title-and-hints false
+browser "/usr/bin/w3m"
+pager internal
+html-renderer "/usr/bin/w3m -dump -T text/html"
+
+auto-reload yes
+notify-beep yes
+feed-sort-order name
+confirm-exit yes
+
+bind-key j next
+bind-key k prev
+bind-key J next-feed
+bind-key K prev-feed
+bind-key j down article
+bind-key k up article
+bind-key J next article
+bind-key K prev article
+
+# highlights
+highlight article "^(Title):.*$" black default
+highlight article "https?://[^ ]+" blue default
+highlight article "\\[image\\ [0-9]+\\]" green default
+

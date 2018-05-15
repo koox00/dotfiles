@@ -88,3 +88,9 @@
 [submodule "vim/.vim/bundle/vim-polyglot"]
 	path = vim/.vim/pack/bundle/opt/vim-polyglot
 	url = https://github.com/sheerun/vim-polyglot
+[submodule "colors/colorschemes/vimcolors"]
+	path = colors/colorschemes/vimcolors
+	url = git@github.com:elmindreda/vimcolors.git
+[submodule "vim/.vim/pack/bundle/start/vim-rhubarb"]
+	path = vim/.vim/pack/bundle/start/vim-rhubarb
+	url = git@github.com:tpope/vim-rhubarb.git

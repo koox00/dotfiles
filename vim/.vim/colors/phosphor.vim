@@ -1,0 +1,1 @@
+../../../colors/colorschemes/vimcolors/colors/phosphor.vim
