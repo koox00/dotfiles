@@ -94,3 +94,6 @@
 [submodule "vim/.vim/pack/bundle/start/vim-rhubarb"]
 	path = vim/.vim/pack/bundle/start/vim-rhubarb
 	url = git@github.com:tpope/vim-rhubarb.git
+[submodule "liquidprompt/liquidprompt"]
+	path = liquidprompt/liquidprompt
+	url = git@github.com:nojhan/liquidprompt.git
