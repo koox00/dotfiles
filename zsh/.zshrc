@@ -16,7 +16,7 @@ setopt COMPLETE_ALIASES
 autoload -Uz compinit
 compinit
 
-[[ $- = *i* ]] && [[ -f ~/dotfiles/liquidprompt/liquidprompt ]]  && source ~/dotfiles/liquidprompt/liquidprompt
+[[ $- = *i* ]] && [[ -f ~/dotfiles/liquidprompt/liquidprompt/liquidprompt ]]  && source ~/dotfiles/liquidprompt/liquidprompt/liquidprompt
 
 if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
     exec startx
