@@ -1,0 +1,96 @@
+#!bin/bash
+# ~/.bash_aliases
+# User specific aliases and functions
+source ~/.git-aliases
+
+alias sshkey="xclip -sel clip < ~/.ssh/id_rsa.pub | echo 'Copied to clipboard.'"
+alias localshare="python2.7 -m SimpleHTTPServer 8080 "
+alias sudo='sudo '
+
+alias mutt='cd ~/attachments && mutt'
+
+alias exofiles="sh ~/strem2/Stremio.sh"
+alias mpcpl="mpc playlist -f \" [%position%) %file% (%artist% - %title%)]\""
+
+alias lata="printf '\e]710;%s\007' \"xft:Inconsolata:pixelsize=12\""
+alias maim="maim ~/Screenshots/$(date +%s).png"
+
+# enable color support of ls and also add handy aliases
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# some more ls aliases
+alias ll='ls -alhF'
+alias la='ls -A'
+alias l='ls -CF'
+
+alias cls='clear && ls'
+
+# a quick way to get out of current directory
+alias ..='cd ..'
+alias ...='cd ../../../'
+alias ....='cd ../../../../'
+alias .....='cd ../../../../'
+alias .4='cd ../../../../'
+alias .5='cd ../../../../..'
+
+# handy short cuts #
+alias h='history'
+alias j='jobs -l'
+alias c="clear"
+alias cls="clear && ls"
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias poweroff="sudo poweroff"
+
+# Stop after sending count ECHO_REQUEST packets #
+alias ping='ping -c 5'
+# Do not wait interval 1 second, go fast #
+alias fastping='ping -c 100 -s.2'
+
+# open ports
+alias ports='netstat -tulanp'
+
+# open and save on exit
+alias bashrc="vim ~/.bashrc && source ~/.bashrc"
+alias zshrc="vim ~/.zshrc && source ~/.zshrc"
+alias aliases="vim ~/.aliases && source ~/.aliases"
+
+## shortcut  for iptables and pass it via sudo#
+alias ipt='sudo /sbin/iptables'
+
+# display all rules #
+alias iptlist='sudo /sbin/iptables -L -n -v --line-numbers'
+alias iptlistin='sudo /sbin/iptables -L INPUT -n -v --line-numbers'
+alias iptlistout='sudo /sbin/iptables -L OUTPUT -n -v --line-numbers'
+alias iptlistfw='sudo /sbin/iptables -L FORWARD -n -v --line-numbers'
+alias firewall=iptlist
+
+alias root='sudo -i'
+alias su='sudo -i'
+
+## pass options to free ##
+alias meminfo="free -m -l -t"
+
+## get top process eating memory
+alias psmem="ps auxf | sort -nr -k 4"
+alias psmem10="ps auxf | sort -nr -k 4 | head -10"
+
+## get top process eating cpu ##
+alias pscpu="ps auxf | sort -nr -k 3"
+alias pscpu10="ps auxf | sort -nr -k 3 | head -10"
+
+## Get server cpu info ##
+alias cpuinfo="lscpu"
+
+## get GPU ram on desktop / laptop##
+alias gpumeminfo="grep -i --color memory /var/log/Xorg.0.log"
+
+alias signal="/home/koox00/builds/Signal-Desktop/dist/linux-unpacked/signal-desktop"
