@@ -2,6 +2,7 @@
 # ~/.bash_aliases
 # User specific aliases and functions
 source ~/.git-aliases
+[[ -f ~/.aliases ]] && source ~/.aliases
 
 alias sshkey="xclip -sel clip < ~/.ssh/id_rsa.pub | echo 'Copied to clipboard.'"
 alias localshare="python2.7 -m SimpleHTTPServer 8080 "
@@ -9,21 +10,9 @@ alias sudo='sudo '
 
 alias mutt='cd ~/attachments && mutt'
 
-alias exofiles="sh ~/strem2/Stremio.sh"
 alias mpcpl="mpc playlist -f \" [%position%) %file% (%artist% - %title%)]\""
 
-alias lata="printf '\e]710;%s\007' \"xft:Inconsolata:pixelsize=12\""
 alias maim="maim ~/Screenshots/$(date +%s).png"
-
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
 
 # some more ls aliases
 alias ll='ls -alhF'
@@ -72,9 +61,6 @@ alias iptlistin='sudo /sbin/iptables -L INPUT -n -v --line-numbers'
 alias iptlistout='sudo /sbin/iptables -L OUTPUT -n -v --line-numbers'
 alias iptlistfw='sudo /sbin/iptables -L FORWARD -n -v --line-numbers'
 alias firewall=iptlist
-
-alias root='sudo -i'
-alias su='sudo -i'
 
 ## pass options to free ##
 alias meminfo="free -m -l -t"
