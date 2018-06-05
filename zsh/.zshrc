@@ -23,6 +23,10 @@ compinit
 
 [[ $- = *i* ]] && [[ -f ~/dotfiles/liquidprompt/liquidprompt/liquidprompt ]]  && source ~/dotfiles/liquidprompt/liquidprompt/liquidprompt
 
+eval $(keychain --eval --quiet id_rsa)
+
+[[ -f ~/.zsh_aliases ]] && source ~/.zsh_aliases
+
 if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
     exec startx
 fi

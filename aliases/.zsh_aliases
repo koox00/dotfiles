@@ -1,7 +1,7 @@
 #!bin/bash
 # ~/.bash_aliases
 # User specific aliases and functions
-source ~/.git-aliases
+[[ -f ~/.git-aliases ]] && source ~/.git-aliases
 [[ -f ~/.aliases ]] && source ~/.aliases
 
 alias sshkey="xclip -sel clip < ~/.ssh/id_rsa.pub | echo 'Copied to clipboard.'"
@@ -13,6 +13,15 @@ alias mutt='cd ~/attachments && mutt'
 alias mpcpl="mpc playlist -f \" [%position%) %file% (%artist% - %title%)]\""
 
 alias maim="maim ~/Screenshots/$(date +%s).png"
+
+if [ -x /usr/bin/dircolors ]; then
+  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+  alias ls='ls --color=auto'
+
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
+fi
 
 # some more ls aliases
 alias ll='ls -alhF'
