@@ -97,3 +97,6 @@
 [submodule "liquidprompt/liquidprompt"]
 	path = liquidprompt/liquidprompt
 	url = git@github.com:nojhan/liquidprompt.git
+[submodule "vim/.vim/pack/bundle/start/vim-lsc"]
+	path = vim/.vim/pack/bundle/start/vim-lsc
+	url = git@github.com:natebosch/vim-lsc.git

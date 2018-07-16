@@ -172,9 +172,24 @@ if executable('ag')
     let g:ackprg = 'ag --vimgrep'
 endif
 
+" Taken from https://github.com/junegunn/fzf/issues/31#issuecomment-49551773
+function! FZFExecute()
+  " Remove trailing new line to make it work with tmux splits
+  let directory = substitute(system('git rev-parse --show-toplevel'), '\n$', '', '')
+  if !v:shell_error
+    call fzf#run({'sink': 'e', 'dir': directory, 'source': 'git ls-files', 'tmux_height': '40%'})
+  else
+    FZF
+  endif
+endfunction
+
+command! FZFExecute call FZFExecute()
+
 " dont auto jump to first result
 cnoreabbrev Ack Ack!
 nnoremap <Leader>a :Ack!<Space>
+nnoremap <Leader>f :FZF<cr>
+nnoremap <Leader>g :FZFExecute<cr>
 
 if &term =~ '256color'
     " disable Background Color Erase (BCE) so that color schemes
