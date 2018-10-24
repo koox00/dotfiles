@@ -16,6 +16,7 @@ set expandtab
 set tabstop=2 shiftwidth=2 softtabstop=2
 set autoindent
 
+set clipboard=unnamedplus
 set cursorcolumn
 set cursorline
 
@@ -58,8 +59,10 @@ set wmh=0 " min window height
 
 " toggle paste mode
 set pastetoggle=<F10>
+
 " get out of insert mode
 " :imap jj <Esc>
+
 " list buffers
 :nnoremap <F5> :buffers<CR>:buffer<Space>
 
@@ -167,9 +170,9 @@ command! J :%!python -mjson.tool
 " The Silver Searcher
 if executable('ag')
     " Use ag over grep
-    set grepprg=ag\ --nogroup\ --nocolor
+    set grepprg=ag\ --nogroup\ --nocolor\ -s
     " ag over Ack
-    let g:ackprg = 'ag --vimgrep'
+    let g:ackprg = 'ag --vimgrep -s'
 endif
 
 " Taken from https://github.com/junegunn/fzf/issues/31#issuecomment-49551773
@@ -189,13 +192,19 @@ command! FZFExecute call FZFExecute()
 cnoreabbrev Ack Ack!
 nnoremap <Leader>a :Ack!<Space>
 nnoremap <Leader>f :FZF<cr>
-nnoremap <Leader>g :FZFExecute<cr>
+nnoremap <Leader>g :GFiles<cr>
+nnoremap <Leader>s :GFiles?<cr>
+nnoremap <Leader>z :Rg<cr>
 
 if &term =~ '256color'
     " disable Background Color Erase (BCE) so that color schemes
     " render properly when inside 256-color tmux and GNU screen.
     " see also http://sunaku.github.io/vim-256color-bce.html
     set t_ut=
+endif
+
+if empty(maparg('-', 'n'))
+  noremap - :Ex<CR>
 endif
 
 " MiniBufExplorer
