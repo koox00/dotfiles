@@ -100,3 +100,9 @@
 [submodule "vim/.vim/pack/bundle/start/vim-lsc"]
 	path = vim/.vim/pack/bundle/start/vim-lsc
 	url = git@github.com:natebosch/vim-lsc.git
+[submodule "vim/.vim/pack/bundle/start/vim-terraform"]
+	path = vim/.vim/pack/bundle/start/vim-terraform
+	url = https://github.com/hashivim/vim-terraform.git
+[submodule "vim/.vim/pack/bundle/start/vim-go"]
+	path = vim/.vim/pack/bundle/start/vim-go
+	url = https://github.com/fatih/vim-go.git
