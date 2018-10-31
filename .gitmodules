@@ -106,3 +106,15 @@
 [submodule "vim/.vim/pack/bundle/start/vim-go"]
 	path = vim/.vim/pack/bundle/start/vim-go
 	url = https://github.com/fatih/vim-go.git
+[submodule "vim/.vim/pack/bundle/start/typescript-vim"]
+	path = vim/.vim/pack/bundle/start/typescript-vim
+	url = https://github.com/leafgarland/typescript-vim.git
+[submodule "vim/.vim/pack/bundle/start/vim-pug"]
+	path = vim/.vim/pack/bundle/start/vim-pug
+	url = https://github.com/digitaltoad/vim-pug.git
+[submodule "vim/.vim/pack/bundle/start/vim-blade"]
+	path = vim/.vim/pack/bundle/start/vim-blade
+	url = https://github.com/jwalton512/vim-blade.git
+[submodule "vim/.vim/pack/bundle/start/fzf.vim"]
+	path = vim/.vim/pack/bundle/start/fzf.vim
+	url = git@github.com:junegunn/fzf.vim.git

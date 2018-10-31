@@ -25,7 +25,7 @@ char *stty_args = "stty raw pass8 nl -echo -iexten -cstopb 38400";
  */
 
 static char *openurlcmd[] = { "/bin/sh", "-c",
-  "xurls | dmenu -fn monospace:size=10 -nb \"#000000\" -nf \"#5fff5f\" -sb \"#000000\" -sf \"#d7005f\" -l 10 -w $WINDOWID  | xargs -r piper", "externalpipe", NULL };
+  "xurls | dmenu -b -fn monospace:size=10 -nb \"#000000\" -nf \"#5fff5f\" -sb \"#000000\" -sf \"#d7005f\" -l 10 -w $WINDOWID  | xargs -r piper", "externalpipe", NULL };
 
 /* identification sequence returned in DA and DECID */
 char *vtiden = "\033[?6c";
