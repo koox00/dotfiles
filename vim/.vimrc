@@ -129,6 +129,7 @@ nnoremap <F5> :GundoToggle<CR>
 " list buffers
 nnoremap <Leader>bs :Buffers<CR>
 nnoremap <Leader>bd :bdelete<CR>
+nmap <Leader>v :tabedit $MYVIMRC<CR>
 
 " navigate windows with Ctrl+h j k l
 nnoremap <C-H> <C-W>h
@@ -262,6 +263,8 @@ augroup END
 autocmd BufReadPre *.doc set ro
 autocmd BufReadPre *.doc set hlsearch!
 autocmd BufReadPost *.doc %!antiword "%"
+
+autocmd BufWritePost .vimrc source $MYVIMRC
 
 :augroup numbertoggle
 :  autocmd!
