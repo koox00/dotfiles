@@ -1,9 +1,6 @@
 [submodule "colors/colorschemes/behelit"]
 	path = colors/colorschemes/behelit
 	url = git://git.2f30.org/behelit.git
-[submodule "colors/colorschemes/vimcolors"]
-	path = colors/colorschemes/vimcolors
-	url = git@github.com:elmindreda/vimcolors.git
 [submodule "mutt/.mutt/mutt-colors-solarized"]
 	path = mutt/.mutt/mutt-colors-solarized
 	url = https://github.com/altercation/mutt-colors-solarized.git
