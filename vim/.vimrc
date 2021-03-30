@@ -1,22 +1,61 @@
+packadd minpac
+
+call minpac#init()
+
+call minpac#add('k-takata/minpac', {'type': 'opt'})
+call minpac#add('ap/vim-css-color')
+call minpac#add('ayu-theme/ayu-vim')
+call minpac#add('airblade/vim-gitgutter')
+call minpac#add('alexanderjeurissen/lumiere.vim', { 'type': 'opt', 'branch': 'main' })
+call minpac#add('dracula/vim')
+call minpac#add('dense-analysis/ale')
+call minpac#add('editorconfig/editorconfig-vim')
+call minpac#add('fatih/vim-go')
+call minpac#add('hashivim/vim-terraform')
+call minpac#add('janko/vim-test')
+call minpac#add('junegunn/fzf.vim')
+call minpac#add('mattn/emmet-vim')
+call minpac#add('MaxMEllon/vim-jsx-pretty')
+call minpac#add('mileszs/ack.vim')
+call minpac#add('morhetz/gruvbox')
+call minpac#add('neoclide/coc.nvim', {'branch': 'release'})
+call minpac#add('NLKNguyen/papercolor-theme')
+call minpac#add('pangloss/vim-javascript')
+call minpac#add('sheerun/vim-polyglot')
+call minpac#add('simnalamburt/vim-mundo')
+call minpac#add('tpope/vim-commentary')
+call minpac#add('tpope/vim-fugitive')
+call minpac#add('tpope/vim-repeat')
+call minpac#add('tpope/vim-dispatch')
+call minpac#add('tpope/vim-rhubarb')
+call minpac#add('tpope/vim-surround')
+call minpac#add('tpope/vim-unimpaired')
+call minpac#add('vim-airline/vim-airline')
+call minpac#add('vim-airline/vim-airline-themes')
+
 set noshowmode
 
 set spell
-set synmaxcol=200
-autocmd VimResized * wincmd =
+set synmaxcol=400
 set autoread
 set breakindent
 set showbreak=\\\\\
 
+set ignorecase
+set smartcase
+
+set rtp+=/usr/local/opt/fzf
+
+set termguicolors
 syntax on
 filetype plugin indent on
-set omnifunc=syntaxcomplete#Complete
 runtime macros/matchit.vim " extended % matching for HTML
 
 set expandtab
 set tabstop=2 shiftwidth=2 softtabstop=2
 set autoindent
 
-set clipboard=unnamedplus
+" set clipboard=unnamedplus
 set cursorcolumn
 set cursorline
 
@@ -29,8 +68,8 @@ autocmd FileType python
 set t_Co=256
 set t_AB=[48;5;%dm
 set t_AF=[38;5;%dm
-
-let g:netrw_banner=0
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
 set history=1000 " set command history
 set path=$PWD/** " set path to working dir and all subdirs recursively
@@ -39,7 +78,7 @@ set laststatus=2 " always show status bar
 set showcmd      " show incomplete cmds down the bottom
 
 set wrap
-set number relativenumber " line numbers
+set number relativenumber
 set hidden " hide buffers instead of closing
 set list   " set chars for tabs, trailing spaces
 set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
@@ -60,11 +99,60 @@ set wmh=0 " min window height
 " toggle paste mode
 set pastetoggle=<F10>
 
-" get out of insert mode
-" :imap jj <Esc>
+if &term =~ '256color'
+    " disable Background Color Erase (BCE) so that color schemes
+    " render properly when inside 256-color tmux and GNU screen.
+    " see also http://sunaku.github.io/vim-256color-bce.html
+    set t_ut=
+endif
+
+let mapleader=","
+let g:netrw_banner=0
+let g:netrw_bufsettings = 'noma nomod nu rnu nobl nowrap ro'
+let g:polyglot_disabled = ['js', 'jsx', 'go']
+let g:gitgutter_preview_win_floating = 1
+
+let test#strategy = "vimterminal"
+
+let g:airline_theme='dracula'
+let g:airline#extensions#branch#format = 2
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#gutentags#enabled = 1
+
+let g:ale_sign_error = '!'
+let g:ale_sign_warning = '?'
+let g:ale_php_cs_fixer_use_global=1
+let g:ale_completion_enabled = 1
+let g:fzf_preview_window = ['up', 'ctrl-/']
+
+if exists('$TMUX')
+  let g:dracula_colorterm = 0
+endif
+
+let g:dracula_italic = 0
+
+if empty(maparg('-', 'n'))
+  noremap - :Ex<CR>
+endif
+
+nnoremap <Space> zA
+vnoremap <Space> zA
+
+nnoremap <F5> :MundoToggle<CR>
 
 " list buffers
-:nnoremap <F5> :buffers<CR>:buffer<Space>
+nnoremap <Leader>bs :Buffers<CR>
+nnoremap <Leader>bd :bdelete<CR>
+nmap <Leader>v :tabedit $MYVIMRC<CR>
+nmap <Leader>v :tabedit $MYVIMRC<CR>
+nmap <Leader>cr :tabedit $HOME/.config/alacritty/alacritty.yml<CR>
+nmap <Leader>l :set list!<CR>
+nmap <Leader>* *<C-O>:%s///gn<CR>
+
+nmap <Leader>cs :let @+=expand("%")<CR>
+nmap <Leader>cl :let @+=expand("%:p")<CR>
 
 " navigate windows with Ctrl+h j k l
 nnoremap <C-H> <C-W>h
@@ -72,81 +160,37 @@ nnoremap <C-J> <C-W>j
 nnoremap <C-K> <C-W>k
 nnoremap <C-L> <C-W>l
 
-" set code folding
-set foldmethod=indent
-set foldnestmax=1
-set nofoldenable
-set foldlevel=2
+command! FZFExecute call FZFExecute()
+command! -nargs=1 ALEIgnore call ALEIgnore(<q-args>)
 
-let g:lightline = {
-      \ 'colorscheme': 'Dracula',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'filename': 'LightlineFilename',
-      \   'gitbranch': 'fugitive#head'
-      \ },
-      \ }
+command! PackUpdate call minpac#update('', {'do': 'call minpac#status()'})
+command! PackClean  call minpac#clean()
+command! PackStatus call minpac#status()
 
-function! LightlineFilename()
-    return expand('%') !=# '' ? fnamemodify(expand("%"), ":~:.") : '[No Name]'
-endfunction
+" json format with :J
+command! J :%!python -mjson.tool
 
-colorscheme behelit
-set background=dark
+" dont auto jump to first result
+cnoreabbrev Ack Ack!
+nnoremap <Leader>a :Ack!<Space>
+nnoremap <Leader>f :FZF<cr>
+nnoremap <Leader>g :GFiles<cr>
+nnoremap <Leader>z :Rg<cr>
+nnoremap <Leader>s :Rgp!<cr>
+nnoremap <Leader>t :GitGutterLineHighlightsToggle<cr>
+nnoremap <Leader>i :ALEIgnore 0<cr>
+nnoremap <Leader>n :ALEIgnore 1<cr>
 
-hi clear SpellBad
-hi SpellBad cterm=underline
+nmap <silent> t<C-n> :TestNearest<CR>
+nmap <silent> t<C-f> :TestFile<CR>
+nmap <silent> t<C-s> :TestSuite<CR>
+nmap <silent> t<C-l> :TestLast<CR>
+nmap <silent> t<C-g> :TestVisit<CR>
 
-
-let g:airline_theme='behelit'
-let g:airline#extensions#branch#format = 2
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_buffers = 0
-
-let g:airline_mode_map = {
-            \ '__' : '-',
-            \ 'n'  : 'N',
-            \ 'i'  : 'I',
-            \ 'R'  : 'R',
-            \ 'c'  : 'C',
-            \ 'v'  : 'V',
-            \ 'V'  : 'V',
-            \ '' : 'V',
-            \ 's'  : 'S',
-            \ 'S'  : 'S',
-            \ '' : 'S',
-            \ }
-
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '◀'
-
-let g:airline_symbols = {}
-let g:airline_symbols.crypt = '🔒'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.maxlinenr = '☰'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.spell = 'Ꞩ'
-let g:airline_symbols.notexists = '∄'
-let g:airline_symbols.whitespace = 'Ξ'
-
-let g:bufferline_echo = 0
-
-" Syntastic
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_scss_checkers = ['scss_lint']
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
-let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
-
-let g:syntastic_auto_loc_list = 1 " open when error, close when no error
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_loc_list_height=3
-
-let g:polyglot_disabled = ['javascript', 'jsx', 'graphql']
+nnoremap <silent> <C-h> :call TmuxMove('h')<cr>
+nnoremap <silent> <C-j> :call TmuxMove('j')<cr>
+nnoremap <silent> <C-k> :call TmuxMove('k')<cr>
+nnoremap <silent> <C-l> :call TmuxMove('l')<cr>
 
 " Ctrl+ hjkl between tmux and vim windows
 " taken from a gist comment somewhere
@@ -158,14 +202,6 @@ function! TmuxMove(direction)
         call system('tmux select-pane -' . tr(a:direction, 'phjkl', 'lLDUR'))
     end
 endfunction
-
-nnoremap <silent> <c-h> :call TmuxMove('h')<cr>
-nnoremap <silent> <c-j> :call TmuxMove('j')<cr>
-nnoremap <silent> <c-k> :call TmuxMove('k')<cr>
-nnoremap <silent> <c-l> :call TmuxMove('l')<cr>
-
-" json format with :J
-command! J :%!python -mjson.tool
 
 " The Silver Searcher
 if executable('ag')
@@ -186,37 +222,72 @@ function! FZFExecute()
   endif
 endfunction
 
-command! FZFExecute call FZFExecute()
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --hidden --glob="!.git/*" --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   {'options': '--delimiter : --nth 2..'})
 
-" dont auto jump to first result
-cnoreabbrev Ack Ack!
-nnoremap <Leader>a :Ack!<Space>
-nnoremap <Leader>f :FZF<cr>
-nnoremap <Leader>g :GFiles<cr>
-nnoremap <Leader>s :GFiles?<cr>
-nnoremap <Leader>z :Rg<cr>
+command! -bang -nargs=? Rgp
+  \ call fzf#vim#grep(
+  \   'rg --hidden --glob="!.git/*" --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview('right:50%', '?'),
+  \   <bang>0)
 
-if &term =~ '256color'
-    " disable Background Color Erase (BCE) so that color schemes
-    " render properly when inside 256-color tmux and GNU screen.
-    " see also http://sunaku.github.io/vim-256color-bce.html
-    set t_ut=
-endif
+function! ALEIgnore(nl)
+  let codes = []
+  for d in getloclist(0)
+    if (d.lnum==line('.'))
+      let code = split(d.text,':')[0]
+      call add(codes, code)
+    endif
+  endfor
+  if len(codes)
+    exe 'normal mq' . (a:nl?'':'1G') . 'O'
+          \ . '/* eslint-disable' . (a:nl?'-next-line ':' ')
+          \ . join(codes, ', ') . ' */' . "\<esc>`q"
+  endif
+endfunction
 
-if empty(maparg('-', 'n'))
-  noremap - :Ex<CR>
-endif
+" Dim inactive windows using 'colorcolumn' setting
+" This tends to slow down redrawing, but is very useful.
+" Based on https://groups.google.com/d/msg/vim_use/IJU-Vk-QLJE/xz4hjPjCRBUJ
+" XXX: this will only work with lines containing text (i.e. not '~')
+function! s:DimInactiveWindows()
+  for i in range(1, tabpagewinnr(tabpagenr(), '$'))
+    let l:range = ""
+    if i != winnr()
+      if &wrap
+        " HACK: when wrapping lines is enabled, we use the maximum number
+        " of columns getting highlighted. This might get calculated by
+        " looking for the longest visible line and using a multiple of
+        " winwidth().
+        let l:width=256 " max
+      else
+        let l:width=winwidth(i)
+      endif
+      let l:range = join(range(1, l:width), ',')
+    endif
+    call setwinvar(i, '&colorcolumn', l:range)
+  endfor
+endfunction
 
-" MiniBufExplorer
-let g:miniBufExplStatusLineText='(╯’□’)╯︵'
+" augroup DimInactiveWindows
+"   au!
+"   au WinEnter * call s:DimInactiveWindows()
+"   au WinEnter * set cursorline
+"   au WinLeave * set nocursorline
+" augroup END
 
-highlight Pmenu ctermfg=green ctermbg=black
-highlight PmenuSel ctermfg=black ctermbg=green
-hi Visual ctermfg=233 ctermbg=83 gui=NONE
+augroup javascript_folding
+    au!
+    au FileType javascript setlocal foldmethod=syntax
+augroup END
 
 autocmd BufReadPre *.doc set ro
 autocmd BufReadPre *.doc set hlsearch!
 autocmd BufReadPost *.doc %!antiword "%"
+
+autocmd BufWritePost .vimrc source $MYVIMRC
 
 :augroup numbertoggle
 :  autocmd!
@@ -224,6 +295,39 @@ autocmd BufReadPost *.doc %!antiword "%"
 :  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 :augroup END
 
+augroup update_bat_theme
+    autocmd!
+    autocmd colorscheme * call ToggleBatEnvVar()
+augroup end
+
+function ToggleBatEnvVar()
+    if (&background == "light")
+        let $BAT_THEME='Dracula'
+    else
+        let $BAT_THEME='Dracula'
+    endif
+endfunction
+
 " line width for emails
 au BufRead /tmp/mutt-* set tw=72
 
+hi clear SpellBad
+hi SpellBad cterm=underline
+
+hi GitGutterAdd    ctermfg=28 ctermbg=157
+hi GitGutterChange ctermfg=238 ctermbg=222
+hi GitGutterDelete ctermfg=124 ctermbg=225
+
+" Put these lines at the very end of your vimrc file.
+
+" Load all plugins now.
+" Plugins need to be added to runtimepath before helptags can be generated.
+"
+packloadall
+
+set background=dark
+colorscheme dracula
+
+" Load all of the helptags now, after plugins have been loaded.
+" All messages and errors will be ignored.
+silent! helptags ALL

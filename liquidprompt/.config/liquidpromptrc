@@ -28,7 +28,8 @@ LP_TEMP_THRESHOLD=60
 # Use the shorten path feature if the path is too long to fit in the prompt
 # line.
 # Recommended value is 1
-LP_ENABLE_SHORTEN_PATH=1
+LP_ENABLE_SHORTEN_PATH=0
+LP_CURRENT_DIR_ONLY=1
 
 # The maximum percentage of the screen width used to display the path before
 # removing the center portion of the path and replacing with '...'.
@@ -38,7 +39,7 @@ LP_PATH_LENGTH=35
 # The number of directories (including '/') to keep at the beginning of a
 # shortened path.
 # Recommended value is 2
-LP_PATH_KEEP=2
+LP_PATH_KEEP=1
 
 # Determine if the hostname should always be displayed, even if not connecting
 # through network.
@@ -78,7 +79,7 @@ LP_ENABLE_JOBS=1
 
 # Enable the load feature.
 # Recommended value is 1
-LP_ENABLE_LOAD=0
+LP_ENABLE_LOAD=1
 
 # Enable the battery feature.
 # Recommended value is 1
