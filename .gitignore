@@ -2,8 +2,8 @@ vim/.vim/swapfiles/*
 vim/.vim/backups/*
 vim/.vim/undos/*
 
-vim/.vim/pack/minpac/*
+vim/.vim/pack/minpac/opt/lumiere.vim
 
-!vim/.vim/pack/minpac/opt/minpac/*
+vim/.vim/pack/minpac/start/*
 
 !**/*.gitkeep
