@@ -4,8 +4,9 @@ call minpac#init()
 
 call minpac#add('k-takata/minpac', {'type': 'opt'})
 call minpac#add('ap/vim-css-color')
+call minpac#add('ayu-theme/ayu-vim')
 call minpac#add('airblade/vim-gitgutter')
-call minpac#add('alexanderjeurissen/lumiere.vim', { 'type': 'opt' })
+call minpac#add('alexanderjeurissen/lumiere.vim', { 'type': 'opt', 'branch': 'main' })
 call minpac#add('dracula/vim')
 call minpac#add('dense-analysis/ale')
 call minpac#add('editorconfig/editorconfig-vim')
@@ -14,9 +15,12 @@ call minpac#add('junegunn/fzf.vim')
 call minpac#add('mattn/emmet-vim')
 call minpac#add('MaxMEllon/vim-jsx-pretty')
 call minpac#add('mileszs/ack.vim')
+call minpac#add('morhetz/gruvbox')
+call minpac#add('neoclide/coc.nvim', {'branch': 'release'})
 call minpac#add('NLKNguyen/papercolor-theme')
 call minpac#add('pangloss/vim-javascript')
-call minpac#add('sjl/gundo.vim')
+call minpac#add('sheerun/vim-polyglot')
+call minpac#add('simnalamburt/vim-mundo')
 call minpac#add('tpope/vim-commentary')
 call minpac#add('tpope/vim-fugitive')
 call minpac#add('tpope/vim-repeat')
@@ -30,7 +34,7 @@ call minpac#add('vim-airline/vim-airline-themes')
 set noshowmode
 
 set spell
-set synmaxcol=0
+set synmaxcol=400
 set autoread
 set breakindent
 set showbreak=\\\\\
@@ -49,7 +53,7 @@ set expandtab
 set tabstop=2 shiftwidth=2 softtabstop=2
 set autoindent
 
-set clipboard=unnamedplus
+" set clipboard=unnamedplus
 set cursorcolumn
 set cursorline
 
@@ -100,9 +104,13 @@ if &term =~ '256color'
     set t_ut=
 endif
 
+let mapleader=","
 let g:netrw_banner=0
-
+let g:netrw_bufsettings = 'noma nomod nu rnu nobl nowrap ro'
+" let g:polyglot_disabled = ['js', 'jsx']
 let g:gitgutter_preview_win_floating = 1
+
+let test#strategy = "vimterminal"
 
 let g:airline_theme='dracula'
 let g:airline#extensions#branch#format = 2
@@ -115,21 +123,34 @@ let g:ale_sign_error = '!'
 let g:ale_sign_warning = '?'
 let g:ale_php_cs_fixer_use_global=1
 let g:ale_completion_enabled = 1
+let g:fzf_preview_window = ['up', 'ctrl-/']
 
 if exists('$TMUX')
   let g:dracula_colorterm = 0
 endif
 
+let g:dracula_italic = 0
+
 if empty(maparg('-', 'n'))
   noremap - :Ex<CR>
 endif
 
-nnoremap <F5> :GundoToggle<CR>
+nnoremap <Space> zA
+vnoremap <Space> zA
+
+nnoremap <F5> :MundoToggle<CR>
 
 " list buffers
 nnoremap <Leader>bs :Buffers<CR>
 nnoremap <Leader>bd :bdelete<CR>
 nmap <Leader>v :tabedit $MYVIMRC<CR>
+nmap <Leader>v :tabedit $MYVIMRC<CR>
+nmap <Leader>cr :tabedit $HOME/.config/alacritty/alacritty.yml<CR>
+nmap <Leader>l :set list!<CR>
+nmap <Leader>* *<C-O>:%s///gn<CR>
+
+nmap <Leader>cs :let @+=expand("%")<CR>
+nmap <Leader>cl :let @+=expand("%:p")<CR>
 
 " navigate windows with Ctrl+h j k l
 nnoremap <C-H> <C-W>h
@@ -248,12 +269,12 @@ function! s:DimInactiveWindows()
   endfor
 endfunction
 
-augroup DimInactiveWindows
-  au!
-  au WinEnter * call s:DimInactiveWindows()
-  au WinEnter * set cursorline
-  au WinLeave * set nocursorline
-augroup END
+" augroup DimInactiveWindows
+"   au!
+"   au WinEnter * call s:DimInactiveWindows()
+"   au WinEnter * set cursorline
+"   au WinLeave * set nocursorline
+" augroup END
 
 augroup javascript_folding
     au!
@@ -272,6 +293,19 @@ autocmd BufWritePost .vimrc source $MYVIMRC
 :  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 :augroup END
 
+augroup update_bat_theme
+    autocmd!
+    autocmd colorscheme * call ToggleBatEnvVar()
+augroup end
+
+function ToggleBatEnvVar()
+    if (&background == "light")
+        let $BAT_THEME='Dracula'
+    else
+        let $BAT_THEME='Dracula'
+    endif
+endfunction
+
 " line width for emails
 au BufRead /tmp/mutt-* set tw=72
 
@@ -289,8 +323,8 @@ hi GitGutterDelete ctermfg=124 ctermbg=225
 "
 packloadall
 
-set background=light
-colorscheme PaperColor
+set background=dark
+colorscheme dracula
 
 " Load all of the helptags now, after plugins have been loaded.
 " All messages and errors will be ignored.

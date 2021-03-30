@@ -7,6 +7,7 @@
 alias sshkey="xclip -sel clip < ~/.ssh/id_rsa.pub | echo 'Copied to clipboard.'"
 alias localshare="python2.7 -m SimpleHTTPServer 8080 "
 alias sudo='sudo '
+alias please='sudo !!'
 
 alias mutt='cd ~/attachments && mutt'
 
@@ -24,7 +25,9 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # some more ls aliases
-alias ll='ls -alhF'
+# alias ll='ls -alhF'
+alias ll='exa -abhlm --all --icons --git'
+
 alias la='ls -A'
 alias l='ls -CF'
 
@@ -88,4 +91,20 @@ alias cpuinfo="lscpu"
 ## get GPU ram on desktop / laptop##
 alias gpumeminfo="grep -i --color memory /var/log/Xorg.0.log"
 
-alias signal="/home/koox00/builds/Signal-Desktop/dist/linux-unpacked/signal-desktop"
+## docker aliases
+alias dps="docker ps -a --no-trunc --format 'table {{.Names}}	{{.Command}}	{{.Status}}	{{.Networks}}	{{.Ports}}'"
+alias dc="docker-compose "
+alias dcps="docker-compose ps"
+alias dcu="docker-compose up"
+alias dcud="docker-compose up -d"
+alias dcs="docker-compose stop"
+alias dcd="docker-compose down"
+alias dcrm="docker-compose rm"
+alias dcr="docker-compose run --rm "
+alias dcg="docker-compose run --rm grunt "
+
+# load tmuxp profiles
+alias tp="tmuxp load pph"
+
+alias rgf="rg ./ --hidden --glob='!.git/*'|fzf"
+alias ctags=/usr/local/bin/ctags

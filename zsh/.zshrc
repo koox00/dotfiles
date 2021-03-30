@@ -1,3 +1,4 @@
+source "$HOME/.vim/pack/minpac/start/gruvbox/gruvbox_256palette.sh"
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
@@ -18,17 +19,46 @@ zstyle ':completion:*' menu select=2                        # menu if nb items >
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}       # colorz !
 zstyle ':completion:*::::' completer _expand _complete _ignored _approximate # list of completers to use
 setopt COMPLETE_ALIASES
-autoload -Uz compinit
-compinit
 
-[[ $- = *i* ]] && [[ -f ~/dotfiles/liquidprompt/liquidprompt/liquidprompt ]]  && source ~/dotfiles/liquidprompt/liquidprompt/liquidprompt
+eval "$(starship init zsh)"
 
-eval $(keychain --eval --quiet id_rsa)
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 [[ -f ~/.zsh_aliases ]] && source ~/.zsh_aliases
 
-if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
-    exec startx
-fi
-
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*"'
+export DRACULA_THEME=$HOME/dotfiles/colors/colorschemes/dracula-theme/
+export NODE_OPTIONS='--max_old_space_size=8192'
+
+ulimit -n 8096
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+eval $(thefuck --alias)
+
+fpath=(~/.zsh/completion $fpath)
+
+autoload -Uz compinit && compinit -i
+
+deeplink() {
+  if [[ $1 == "ios" ]]; then
+    echo "ios: $2"
+    xcrun simctl openurl booted "$2"
+  elif [[ $1 == "android" ]]
+    echo "android: $2"
+  then
+    adb shell am start -W -a android.intent.action.VIEW -d "$2" com.pph.debug
+  fi
+}
+
+rn-clean() {
+  watchman watch-del-all
+  rm -rf ${TMPDIR}react-*
+  rm -rf ${TMPDIR}haste-*
+  rm -rf ${TMPDIR}metro-*
+}
+
+export MYSQL_PS1="\u@\h [\d]> "
+fpath+=${ZDOTDIR:-~}/.zsh_functions
