@@ -20,7 +20,11 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}       # colorz !
 zstyle ':completion:*::::' completer _expand _complete _ignored _approximate # list of completers to use
 setopt COMPLETE_ALIASES
 
-eval "$(starship init zsh)"
+autoload -Uz compinit && compinit -i
+
+# eval "$(starship init zsh)"
+
+[[ $- = *i* ]] && [[ -f ~/dotfiles/liquidprompt/liquidprompt/liquidprompt ]]  && source ~/dotfiles/liquidprompt/liquidprompt/liquidprompt
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -39,8 +43,6 @@ export NVM_DIR="$HOME/.nvm"
 eval $(thefuck --alias)
 
 fpath=(~/.zsh/completion $fpath)
-
-autoload -Uz compinit && compinit -i
 
 deeplink() {
   if [[ $1 == "ios" ]]; then
