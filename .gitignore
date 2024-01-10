@@ -1,6 +1,7 @@
 vim/.vim/swapfiles/*
 vim/.vim/backups/*
 vim/.vim/undos/*
+vim/.vim/.netrwhist
 
 vim/.vim/pack/minpac/opt/lumiere.vim
 
