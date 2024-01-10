@@ -1,4 +1,3 @@
-source "$HOME/.vim/pack/minpac/start/gruvbox/gruvbox_256palette.sh"
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
@@ -64,3 +63,7 @@ rn-clean() {
 
 export MYSQL_PS1="\u@\h [\d]> "
 fpath+=${ZDOTDIR:-~}/.zsh_functions
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+export GOPATH=~/go
+export PATH=$PATH:/$GO_PATH/bin

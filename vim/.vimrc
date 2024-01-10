@@ -3,30 +3,29 @@ packadd minpac
 call minpac#init()
 
 call minpac#add('k-takata/minpac', {'type': 'opt'})
+call minpac#add('MaxMEllon/vim-jsx-pretty')
+call minpac#add('airblade/vim-gitgutter', {'branch': 'main'})
 call minpac#add('ap/vim-css-color')
-call minpac#add('ayu-theme/ayu-vim')
-call minpac#add('airblade/vim-gitgutter')
-call minpac#add('alexanderjeurissen/lumiere.vim', { 'type': 'opt', 'branch': 'main' })
+call minpac#add('christoomey/vim-tmux-navigator')
 call minpac#add('dracula/vim')
-call minpac#add('dense-analysis/ale')
 call minpac#add('editorconfig/editorconfig-vim')
 call minpac#add('fatih/vim-go')
 call minpac#add('hashivim/vim-terraform')
 call minpac#add('janko/vim-test')
 call minpac#add('junegunn/fzf.vim')
+call minpac#add('lervag/vimtex')
 call minpac#add('mattn/emmet-vim')
-call minpac#add('MaxMEllon/vim-jsx-pretty')
+call minpac#add('mbbill/undotree')
 call minpac#add('mileszs/ack.vim')
-call minpac#add('morhetz/gruvbox')
 call minpac#add('neoclide/coc.nvim', {'branch': 'release'})
-call minpac#add('NLKNguyen/papercolor-theme')
 call minpac#add('pangloss/vim-javascript')
+call minpac#add('preservim/tagbar')
 call minpac#add('sheerun/vim-polyglot')
-call minpac#add('simnalamburt/vim-mundo')
+call minpac#add('SirVer/ultisnips')
 call minpac#add('tpope/vim-commentary')
+call minpac#add('tpope/vim-dispatch')
 call minpac#add('tpope/vim-fugitive')
 call minpac#add('tpope/vim-repeat')
-call minpac#add('tpope/vim-dispatch')
 call minpac#add('tpope/vim-rhubarb')
 call minpac#add('tpope/vim-surround')
 call minpac#add('tpope/vim-unimpaired')
@@ -59,11 +58,6 @@ set autoindent
 set cursorcolumn
 set cursorline
 
-autocmd FileType python
-            \ setlocal sw=4 |
-            \ setlocal ts=4 |
-            \ setlocal sts=4
-
 " display 256 colors
 set t_Co=256
 set t_AB=[48;5;%dm
@@ -82,6 +76,7 @@ set number relativenumber
 set hidden " hide buffers instead of closing
 set list   " set chars for tabs, trailing spaces
 set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
+set wmh=0 " min window height
 
 set incsearch   " find the next match as we type the search
 set hlsearch    " highlight searches by default
@@ -94,10 +89,18 @@ set undodir=$HOME/.vim/undos// " where to save undo histories
 set undolevels=1000            " How many undos
 set undoreload=10000           " number of lines to save for undo
 
-set wmh=0 " min window height
+" CTRL-X and SHIFT-Del are Cut
+vnoremap <C-X> "+x
+vnoremap <S-Del> "+x
 
-" toggle paste mode
-set pastetoggle=<F10>
+" CTRL-C and CTRL-Insert are Copy
+vnoremap <C-C> "+y
+vnoremap <C-Insert> "+y
+
+" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+" The following changes the default filetype back to 'tex':
+let g:tex_flavor='latex'
 
 if &term =~ '256color'
     " disable Background Color Erase (BCE) so that color schemes
@@ -125,7 +128,14 @@ let g:ale_sign_error = '!'
 let g:ale_sign_warning = '?'
 let g:ale_php_cs_fixer_use_global=1
 let g:ale_completion_enabled = 1
+
 let g:fzf_preview_window = ['up', 'ctrl-/']
+
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+let g:go_metalinter_autosave = 1
+let g:go_auto_type_info = 1
+let g:go_fmt_command = "goimports"
+let g:go_auto_sameids = 1
 
 if exists('$TMUX')
   let g:dracula_colorterm = 0
@@ -140,15 +150,14 @@ endif
 nnoremap <Space> zA
 vnoremap <Space> zA
 
-nnoremap <F5> :MundoToggle<CR>
+nnoremap <F5> :UndotreeToggle<CR>
 
 " list buffers
 nnoremap <Leader>bs :Buffers<CR>
 nnoremap <Leader>bd :bdelete<CR>
 nmap <Leader>v :tabedit $MYVIMRC<CR>
-nmap <Leader>v :tabedit $MYVIMRC<CR>
 nmap <Leader>cr :tabedit $HOME/.config/alacritty/alacritty.yml<CR>
-nmap <Leader>l :set list!<CR>
+nmap <Leader>list :set list!<CR>
 nmap <Leader>* *<C-O>:%s///gn<CR>
 
 nmap <Leader>cs :let @+=expand("%")<CR>
@@ -187,22 +196,6 @@ nmap <silent> t<C-s> :TestSuite<CR>
 nmap <silent> t<C-l> :TestLast<CR>
 nmap <silent> t<C-g> :TestVisit<CR>
 
-nnoremap <silent> <C-h> :call TmuxMove('h')<cr>
-nnoremap <silent> <C-j> :call TmuxMove('j')<cr>
-nnoremap <silent> <C-k> :call TmuxMove('k')<cr>
-nnoremap <silent> <C-l> :call TmuxMove('l')<cr>
-
-" Ctrl+ hjkl between tmux and vim windows
-" taken from a gist comment somewhere
-function! TmuxMove(direction)
-    let wnr = winnr()
-    silent! execute 'wincmd ' . a:direction
-    " If the winnr is still the same after we moved, it is the last pane
-    if wnr == winnr()
-        call system('tmux select-pane -' . tr(a:direction, 'phjkl', 'lLDUR'))
-    end
-endfunction
-
 " The Silver Searcher
 if executable('ag')
     " Use ag over grep
@@ -210,17 +203,6 @@ if executable('ag')
     " ag over Ack
     let g:ackprg = 'ag --vimgrep -s'
 endif
-
-" Taken from https://github.com/junegunn/fzf/issues/31#issuecomment-49551773
-function! FZFExecute()
-  " Remove trailing new line to make it work with tmux splits
-  let directory = substitute(system('git rev-parse --show-toplevel'), '\n$', '', '')
-  if !v:shell_error
-    call fzf#run({'sink': 'e', 'dir': directory, 'source': 'git ls-files', 'tmux_height': '40%'})
-  else
-    FZF
-  endif
-endfunction
 
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
@@ -232,51 +214,6 @@ command! -bang -nargs=? Rgp
   \   'rg --hidden --glob="!.git/*" --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
   \   fzf#vim#with_preview('right:50%', '?'),
   \   <bang>0)
-
-function! ALEIgnore(nl)
-  let codes = []
-  for d in getloclist(0)
-    if (d.lnum==line('.'))
-      let code = split(d.text,':')[0]
-      call add(codes, code)
-    endif
-  endfor
-  if len(codes)
-    exe 'normal mq' . (a:nl?'':'1G') . 'O'
-          \ . '/* eslint-disable' . (a:nl?'-next-line ':' ')
-          \ . join(codes, ', ') . ' */' . "\<esc>`q"
-  endif
-endfunction
-
-" Dim inactive windows using 'colorcolumn' setting
-" This tends to slow down redrawing, but is very useful.
-" Based on https://groups.google.com/d/msg/vim_use/IJU-Vk-QLJE/xz4hjPjCRBUJ
-" XXX: this will only work with lines containing text (i.e. not '~')
-function! s:DimInactiveWindows()
-  for i in range(1, tabpagewinnr(tabpagenr(), '$'))
-    let l:range = ""
-    if i != winnr()
-      if &wrap
-        " HACK: when wrapping lines is enabled, we use the maximum number
-        " of columns getting highlighted. This might get calculated by
-        " looking for the longest visible line and using a multiple of
-        " winwidth().
-        let l:width=256 " max
-      else
-        let l:width=winwidth(i)
-      endif
-      let l:range = join(range(1, l:width), ',')
-    endif
-    call setwinvar(i, '&colorcolumn', l:range)
-  endfor
-endfunction
-
-" augroup DimInactiveWindows
-"   au!
-"   au WinEnter * call s:DimInactiveWindows()
-"   au WinEnter * set cursorline
-"   au WinLeave * set nocursorline
-" augroup END
 
 augroup javascript_folding
     au!
@@ -300,14 +237,6 @@ augroup update_bat_theme
     autocmd colorscheme * call ToggleBatEnvVar()
 augroup end
 
-function ToggleBatEnvVar()
-    if (&background == "light")
-        let $BAT_THEME='Dracula'
-    else
-        let $BAT_THEME='Dracula'
-    endif
-endfunction
-
 " line width for emails
 au BufRead /tmp/mutt-* set tw=72
 
@@ -317,6 +246,40 @@ hi SpellBad cterm=underline
 hi GitGutterAdd    ctermfg=28 ctermbg=157
 hi GitGutterChange ctermfg=238 ctermbg=222
 hi GitGutterDelete ctermfg=124 ctermbg=225
+
+function! ToggleBatEnvVar()
+    if (&background == "light")
+        let $BAT_THEME='Dracula'
+    else
+        let $BAT_THEME='Dracula'
+    endif
+endfunction
+
+" Taken from https://github.com/junegunn/fzf/issues/31#issuecomment-49551773
+function! FZFExecute()
+  " Remove trailing new line to make it work with tmux splits
+  let directory = substitute(system('git rev-parse --show-toplevel'), '\n$', '', '')
+  if !v:shell_error
+    call fzf#run({'sink': 'e', 'dir': directory, 'source': 'git ls-files', 'tmux_height': '40%'})
+  else
+    FZF
+  endif
+endfunction
+
+function! ALEIgnore(nl)
+  let codes = []
+  for d in getloclist(0)
+    if (d.lnum==line('.'))
+      let code = split(d.text,':')[0]
+      call add(codes, code)
+    endif
+  endfor
+  if len(codes)
+    exe 'normal mq' . (a:nl?'':'1G') . 'O'
+          \ . '/* eslint-disable' . (a:nl?'-next-line ':' ')
+          \ . join(codes, ', ') . ' */' . "\<esc>`q"
+  endif
+endfunction
 
 " Put these lines at the very end of your vimrc file.
 
