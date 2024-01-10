@@ -1,6 +1,7 @@
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
+
 setopt appendhistory autocd beep extendedglob nomatch
 bindkey -v
 
@@ -19,7 +20,15 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}       # colorz !
 zstyle ':completion:*::::' completer _expand _complete _ignored _approximate # list of completers to use
 setopt COMPLETE_ALIASES
 
-autoload -Uz compinit && compinit -i
+if type brew &>/dev/null
+then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+
+  autoload -Uz compinit
+  compinit
+fi
+
+# autoload -Uz compinit && compinit -i
 
 # eval "$(starship init zsh)"
 
@@ -41,25 +50,10 @@ export NVM_DIR="$HOME/.nvm"
 
 eval $(thefuck --alias)
 
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
 fpath=(~/.zsh/completion $fpath)
-
-deeplink() {
-  if [[ $1 == "ios" ]]; then
-    echo "ios: $2"
-    xcrun simctl openurl booted "$2"
-  elif [[ $1 == "android" ]]
-    echo "android: $2"
-  then
-    adb shell am start -W -a android.intent.action.VIEW -d "$2" com.pph.debug
-  fi
-}
-
-rn-clean() {
-  watchman watch-del-all
-  rm -rf ${TMPDIR}react-*
-  rm -rf ${TMPDIR}haste-*
-  rm -rf ${TMPDIR}metro-*
-}
 
 export MYSQL_PS1="\u@\h [\d]> "
 fpath+=${ZDOTDIR:-~}/.zsh_functions
