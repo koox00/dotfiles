@@ -20,9 +20,9 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}       # colorz !
 zstyle ':completion:*::::' completer _expand _complete _ignored _approximate # list of completers to use
 setopt COMPLETE_ALIASES
 
-if type brew &>/dev/null
-then
+if type brew &>/dev/null; then
   FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+  FPATH="$(brew --prefix)/share/zsh-completions:${FPATH}"
 
   autoload -Uz compinit
   compinit
