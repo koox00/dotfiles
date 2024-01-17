@@ -13,9 +13,6 @@
 [submodule "liquidprompt/liquidprompt"]
 	path = liquidprompt/liquidprompt
 	url = git@github.com:nojhan/liquidprompt.git
-[submodule "colors/colorschemes/sombre.tmux"]
-	path = colors/colorschemes/sombre.tmux
-	url = https://github.com/alexanderjeurissen/sombre.tmux
 [submodule "colors/colorschemes/dracula-theme"]
 	path = colors/colorschemes/dracula-theme
 	url = git@github.com:dracula/dracula-theme.git
