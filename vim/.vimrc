@@ -5,6 +5,7 @@ call minpac#init()
 call minpac#add('k-takata/minpac', {'type': 'opt'})
 call minpac#add('MaxMEllon/vim-jsx-pretty')
 call minpac#add('airblade/vim-gitgutter', {'branch': 'main'})
+call minpac#add('pbrisbin/vim-colors-off', {'branch': 'main'})
 call minpac#add('ap/vim-css-color')
 call minpac#add('christoomey/vim-tmux-navigator')
 call minpac#add('dracula/vim')
@@ -47,6 +48,7 @@ set ignorecase
 set smartcase
 
 set rtp+=/opt/homebrew/opt/fzf
+set updatetime=100
 
 set termguicolors
 syntax on
@@ -68,11 +70,11 @@ set t_AF=[38;5;%dm
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
-set history=1000 " set command history
-set path=$PWD/** " set path to working dir and all subdirs recursively
+set history=1000
+set path=$PWD/**
 
-set laststatus=2 " always show status bar
-set showcmd      " show incomplete cmds down the bottom
+set laststatus=2 
+set showcmd
 
 set wrap
 set number relativenumber
@@ -85,6 +87,7 @@ set incsearch   " find the next match as we type the search
 set hlsearch    " highlight searches by default
 
 set directory=$HOME/.vim/swapfiles// " save directory for swapfiles
+set backup
 set backupdir=$HOME/.vim/backups//   " save directory for backup files
 
 set undofile                   " Save undo's after file closes
@@ -117,6 +120,8 @@ let g:netrw_banner=0
 let g:netrw_bufsettings = 'noma nomod nu rnu nobl nowrap ro'
 let g:polyglot_disabled = ['js', 'jsx', 'go']
 let g:gitgutter_preview_win_floating = 1
+let g:gitgutter_terminal_reports_focus = 0
+let g:gitgutter_enabled = 1
 
 let test#strategy = "vimterminal"
 
@@ -127,10 +132,10 @@ let g:airline#extensions#tabline#show_buffers = 0
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#gutentags#enabled = 1
 
-let g:ale_sign_error = '!'
-let g:ale_sign_warning = '?'
-let g:ale_php_cs_fixer_use_global=1
-let g:ale_completion_enabled = 1
+" let g:ale_sign_error = '!'
+" let g:ale_sign_warning = '?'
+" let g:ale_php_cs_fixer_use_global=1
+" let g:ale_completion_enabled = 1
 
 let g:fzf_preview_window = ['up', 'ctrl-/']
 
@@ -159,7 +164,7 @@ nnoremap <F5> :UndotreeToggle<CR>
 nnoremap <Leader>bs :Buffers<CR>
 nnoremap <Leader>bd :bdelete<CR>
 nmap <Leader>v :tabedit $MYVIMRC<CR>
-nmap <Leader>cr :tabedit $HOME/.config/alacritty/alacritty.yml<CR>
+nmap <Leader>cr :tabedit $HOME/.config/alacritty/alacritty.toml<CR>
 nmap <Leader>list :set list!<CR>
 nmap <Leader>* *<C-O>:%s///gn<CR>
 
@@ -173,7 +178,7 @@ nnoremap <C-K> <C-W>k
 nnoremap <C-L> <C-W>l
 
 command! FZFExecute call FZFExecute()
-command! -nargs=1 ALEIgnore call ALEIgnore(<q-args>)
+" command! -nargs=1 ALEIgnore call ALEIgnore(<q-args>)
 
 command! PackUpdate call minpac#update('', {'do': 'call minpac#status()'})
 command! PackClean  call minpac#clean()
@@ -190,8 +195,8 @@ nnoremap <Leader>g :GFiles<cr>
 nnoremap <Leader>z :Rg<cr>
 nnoremap <Leader>s :Rgp!<cr>
 nnoremap <Leader>t :GitGutterLineHighlightsToggle<cr>
-nnoremap <Leader>i :ALEIgnore 0<cr>
-nnoremap <Leader>n :ALEIgnore 1<cr>
+" nnoremap <Leader>i :ALEIgnore 0<cr>
+" nnoremap <Leader>n :ALEIgnore 1<cr>
 
 nmap <silent> t<C-n> :TestNearest<CR>
 nmap <silent> t<C-f> :TestFile<CR>
@@ -223,11 +228,26 @@ augroup javascript_folding
     au FileType javascript setlocal foldmethod=syntax
 augroup END
 
-autocmd BufReadPre *.doc set ro
-autocmd BufReadPre *.doc set hlsearch!
-autocmd BufReadPost *.doc %!antiword "%"
+augroup doc
+  autocmd!
+  autocmd BufReadPre *.doc set ro
+  autocmd BufReadPre *.doc set hlsearch!
+  autocmd BufReadPost *.doc %!antiword "%"
+augroup END
 
-autocmd BufWritePost .vimrc source $MYVIMRC
+augroup vim_rc
+  autocmd!
+  autocmd bufwritepost $MYVIMRC call OnSavingVimrc()
+augroup END
+
+" Avoid infinite loops
+if !exists("*OnSavingVimrc")
+  function! OnSavingVimrc()
+    mapclear | mapclear <buffer> | mapclear! | mapclear! <buffer>
+    echo "Sourcing Vimrc after saving it"
+    source $MYVIMRC
+  endfunction
+endif
 
 :augroup numbertoggle
 :  autocmd!
@@ -241,14 +261,17 @@ augroup update_bat_theme
 augroup end
 
 " line width for emails
-au BufRead /tmp/mutt-* set tw=72
+augroup mutt
+    au!
+    au BufRead /tmp/mutt-* set tw=72
+augroup END
 
 hi clear SpellBad
 hi SpellBad cterm=underline
 
-hi GitGutterAdd    ctermfg=28 ctermbg=157
-hi GitGutterChange ctermfg=238 ctermbg=222
-hi GitGutterDelete ctermfg=124 ctermbg=225
+" hi GitGutterAdd    ctermfg=28 ctermbg=157
+" hi GitGutterChange ctermfg=238 ctermbg=222
+" hi GitGutterDelete ctermfg=124 ctermbg=225
 
 function! ToggleBatEnvVar()
     if (&background == "light")
@@ -284,34 +307,34 @@ function! ALEIgnore(nl)
   endif
 endfunction
 
-function! s:on_lsp_buffer_enabled() abort
-    setlocal omnifunc=lsp#complete
-    setlocal signcolumn=yes
-    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-    nmap <buffer> gd <plug>(lsp-definition)
-    nmap <buffer> gs <plug>(lsp-document-symbol-search)
-    nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
-    nmap <buffer> gr <plug>(lsp-references)
-    nmap <buffer> gi <plug>(lsp-implementation)
-    nmap <buffer> gt <plug>(lsp-type-definition)
-    nmap <buffer> <leader>rn <plug>(lsp-rename)
-    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
-    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
-    nmap <buffer> K <plug>(lsp-hover)
-    " nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
-    " nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
+ function! s:on_lsp_buffer_enabled() abort
+     setlocal omnifunc=lsp#complete
+     setlocal signcolumn=yes
+     if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+     nmap <buffer> gd <plug>(lsp-definition)
+     nmap <buffer> gs <plug>(lsp-document-symbol-search)
+     nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+     nmap <buffer> gr <plug>(lsp-references)
+     nmap <buffer> gi <plug>(lsp-implementation)
+     nmap <buffer> gt <plug>(lsp-type-definition)
+     nmap <buffer> <leader>rn <plug>(lsp-rename)
+     nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+     nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+     nmap <buffer> K <plug>(lsp-hover)
+     " nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
+     " nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
 
-    let g:lsp_format_sync_timeout = 1000
-    autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
+     let g:lsp_format_sync_timeout = 1000
+     autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
 
-    " refer to doc to add more commands
-endfunction
+     " refer to doc to add more commands
+ endfunction
 
-augroup lsp_install
-    au!
-    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
-    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-augroup END
+ augroup lsp_install
+     au!
+     " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+ augroup END
 
 " Put these lines at the very end of your vimrc file.
 
