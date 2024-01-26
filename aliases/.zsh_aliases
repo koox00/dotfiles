@@ -8,6 +8,7 @@ alias sshkey="xclip -sel clip < ~/.ssh/id_rsa.pub | echo 'Copied to clipboard.'"
 alias localshare="python2.7 -m SimpleHTTPServer 8080 "
 alias sudo='sudo '
 alias please='sudo !!'
+alias cppwd='pwd | pbcopy'
 
 alias mutt='cd ~/attachments && mutt'
 
@@ -103,8 +104,5 @@ alias dcrm="docker-compose rm"
 alias dcr="docker-compose run --rm "
 alias dcg="docker-compose run --rm grunt "
 
-# load tmuxp profiles
-alias tp="tmuxp load pph"
-
 alias rgf="rg ./ --hidden --glob='!.git/*'|fzf"
-alias ctags=/usr/local/bin/ctags
+# alias ctags=/usr/local/bin/ctags
