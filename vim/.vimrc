@@ -3,29 +3,27 @@ packadd minpac
 call minpac#init()
 
 call minpac#add('k-takata/minpac', {'type': 'opt'})
+
 call minpac#add('MaxMEllon/vim-jsx-pretty')
+call minpac#add('SirVer/ultisnips')
 call minpac#add('airblade/vim-gitgutter', {'branch': 'main'})
-call minpac#add('pbrisbin/vim-colors-off', {'branch': 'main'})
 call minpac#add('ap/vim-css-color')
 call minpac#add('christoomey/vim-tmux-navigator')
 call minpac#add('dracula/vim')
-call minpac#add('editorconfig/editorconfig-vim')
+" call minpac#add('editorconfig/editorconfig-vim')
 call minpac#add('fatih/vim-go')
 call minpac#add('hashivim/vim-terraform')
 call minpac#add('janko/vim-test')
 call minpac#add('junegunn/fzf.vim')
-call minpac#add('lervag/vimtex')
 call minpac#add('mattn/emmet-vim')
 call minpac#add('mbbill/undotree')
 call minpac#add('mileszs/ack.vim')
+call minpac#add('neoclide/coc.nvim', {'branch': 'release'})
 call minpac#add('pangloss/vim-javascript')
-call minpac#add('prabirshrestha/vim-lsp')
-call minpac#add('prabirshrestha/asyncomplete.vim')
-call minpac#add('prabirshrestha/asyncomplete-lsp.vim')
-call minpac#add('mattn/vim-lsp-settings')
 call minpac#add('preservim/tagbar')
+call minpac#add('prettier/vim-prettier')
 call minpac#add('sheerun/vim-polyglot')
-call minpac#add('SirVer/ultisnips')
+call minpac#add('styled-components/vim-styled-components')
 call minpac#add('tpope/vim-commentary')
 call minpac#add('tpope/vim-dispatch')
 call minpac#add('tpope/vim-fugitive')
@@ -35,6 +33,7 @@ call minpac#add('tpope/vim-surround')
 call minpac#add('tpope/vim-unimpaired')
 call minpac#add('vim-airline/vim-airline')
 call minpac#add('vim-airline/vim-airline-themes')
+" call minpac#add('vim-ruby/vim-ruby')
 
 set noshowmode
 
@@ -43,11 +42,12 @@ set synmaxcol=400
 set autoread
 set breakindent
 set showbreak=\\\\\
+set encoding=utf-8
 
 set ignorecase
 set smartcase
 
-set rtp+=/opt/homebrew/opt/fzf
+set rtp+=~/.fzf
 set updatetime=100
 
 set termguicolors
@@ -62,6 +62,8 @@ set autoindent
 " set clipboard=unnamedplus
 set cursorcolumn
 set cursorline
+
+set signcolumn=yes
 
 " display 256 colors
 set t_Co=256
@@ -114,7 +116,7 @@ let mapleader=","
 let g:netrw_banner=0
 let g:netrw_bufsettings = 'noma nomod nu rnu nobl nowrap ro'
 
-let g:polyglot_disabled = ['js', 'jsx', 'go']
+let g:polyglot_disabled = ['js', 'jsx', 'go', 'ruby']
 
 let g:gitgutter_preview_win_floating = 1
 let g:gitgutter_terminal_reports_focus = 0
@@ -143,6 +145,17 @@ let g:go_metalinter_autosave = 1
 let g:go_auto_type_info = 1
 let g:go_fmt_command = "goimports"
 let g:go_auto_sameids = 1
+
+let g:coc_global_extensions = [
+            \ 'coc-diagnostic',
+            \ 'coc-json',
+            \ 'coc-git',
+            \ 'coc-tsserver',
+            \ 'coc-eslint',
+            \ 'coc-css',
+            \ 'coc-html',
+            \ 'coc-solargraph'
+            \ ]
 
 if exists('$TMUX')
   let g:dracula_colorterm = 0
@@ -198,11 +211,30 @@ nmap <silent> t<C-s> :TestSuite<CR>
 nmap <silent> t<C-l> :TestLast<CR>
 nmap <silent> t<C-g> :TestVisit<CR>
 
+nmap <Leader>qf  <Plug>(coc-fix-current)
+nmap <Leader>qd <Plug>(coc-definition)
+nmap <Leader>qy <Plug>(coc-type-definition)
+nmap <Leader>qi <Plug>(coc-implementation)
+nmap <Leader>qr <Plug>(coc-references)
+nmap <silent>[q <Plug>(coc-diagnostic-prev)
+nmap <silent>]q <Plug>(coc-diagnostic-next)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
 " json format with :J
 command! J :%!python -mjson.tool
 
 command! FZFExecute call FZFExecute()
-" command! -nargs=1 ALEIgnore call ALEIgnore(<q-args>)
+command! -nargs=1 ALEIgnore call ALEIgnore(<q-args>)
 command! PackUpdate call minpac#update('', {'do': 'call minpac#status()'})
 command! PackClean  call minpac#clean()
 command! PackStatus call minpac#status()
@@ -260,29 +292,6 @@ function! ALEIgnore(nl)
   endif
 endfunction
 
-function! s:on_lsp_buffer_enabled() abort
-    setlocal omnifunc=lsp#complete
-    setlocal signcolumn=yes
-    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
-    nmap <buffer> gd <plug>(lsp-definition)
-    nmap <buffer> gs <plug>(lsp-document-symbol-search)
-    nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
-    nmap <buffer> gr <plug>(lsp-references)
-    nmap <buffer> gi <plug>(lsp-implementation)
-    nmap <buffer> gt <plug>(lsp-type-definition)
-    nmap <buffer> <leader>rn <plug>(lsp-rename)
-    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
-    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
-    nmap <buffer> K <plug>(lsp-hover)
-    " nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
-    " nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
-
-    let g:lsp_format_sync_timeout = 1000
-    autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
-
-    " refer to doc to add more commands
-endfunction
-
 augroup javascriptfolding
     au!
     au FileType javascript setlocal foldmethod=syntax
@@ -316,12 +325,6 @@ augroup mutt
     au!
     au BufRead /tmp/mutt-* set tw=72
 augroup END
-
- augroup lsp_install
-     au!
-     " call s:on_lsp_buffer_enabled only for languages that has the server registered.
-     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
- augroup END
 
 augroup vimrc
   au!

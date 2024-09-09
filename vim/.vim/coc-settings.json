@@ -1,0 +1,19 @@
+{
+  "solargraph.diagnostics": true,
+  "solargraph.useBundler": false,
+  "solargraph.commandPath": "/home/kyriakos.ziakoulis/.rvm/gems/ruby-3.3.1/bin/solargraph",
+  "solargraph.formatting": true,
+  "solargraph.checkGemVersion": true,
+  "languageserver": {
+    "graphql": {
+      "command": "graphql-lsp",
+      "args": ["server", "-m", "stream"],
+      "filetypes": ["typescript", "typescriptreact", "graphql"]
+    },
+    "dockerfile": {
+      "command": "docker-langserver",
+      "filetypes": ["dockerfile"],
+      "args": ["--stdio"]
+    }
+  }
+}
