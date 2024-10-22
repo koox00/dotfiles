@@ -1,4 +1,7 @@
 {
+  "eslint.packageManager": "yarn",
+  "eslint.nodePath": "/home/kyriakos.ziakoulis/.nvm/versions/node/v18.20.4/bin/node",
+  "eslint.experimental.useFlatConfig": true,
   "solargraph.diagnostics": true,
   "solargraph.useBundler": false,
   "solargraph.commandPath": "/home/kyriakos.ziakoulis/.rvm/gems/ruby-3.3.1/bin/solargraph",

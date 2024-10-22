@@ -4,13 +4,13 @@ call minpac#init()
 
 call minpac#add('k-takata/minpac', {'type': 'opt'})
 
-call minpac#add('MaxMEllon/vim-jsx-pretty')
+" call minpac#add('MaxMEllon/vim-jsx-pretty')
 call minpac#add('SirVer/ultisnips')
 call minpac#add('airblade/vim-gitgutter', {'branch': 'main'})
 call minpac#add('ap/vim-css-color')
 call minpac#add('christoomey/vim-tmux-navigator')
 call minpac#add('dracula/vim')
-" call minpac#add('editorconfig/editorconfig-vim')
+call minpac#add('editorconfig/editorconfig-vim')
 call minpac#add('fatih/vim-go')
 call minpac#add('hashivim/vim-terraform')
 call minpac#add('janko/vim-test')
@@ -116,7 +116,7 @@ let mapleader=","
 let g:netrw_banner=0
 let g:netrw_bufsettings = 'noma nomod nu rnu nobl nowrap ro'
 
-let g:polyglot_disabled = ['js', 'jsx', 'go', 'ruby']
+let g:polyglot_disabled = ['ts', 'tsx', 'go', 'ruby']
 
 let g:gitgutter_preview_win_floating = 1
 let g:gitgutter_terminal_reports_focus = 0
